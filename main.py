@@ -4,7 +4,7 @@ import time
 import requests
 from lxml import html
 
-
+# 
 from db import createConnection
 collection = createConnection("piblink")
 
@@ -30,19 +30,19 @@ def run_scraper():
                 "url": f"https://pib.gov.in/{tag.get('href')}"
             }
 
-            existing_data = collection.find_one({"url": data["url"]})
+            # existing_data = collection.find_one({"url": data["url"]})
 
-            if existing_data is None:
-                # Data is not in the database, so insert it
-                collection.insert_one(data)
+            # if existing_data is None:
+            #     Data is not in the database, so insert it
+            #     collection.insert_one(data)
 
             # Print the data you scraped
             print(data)
 
     
 
-schedule.every().hour.do(run_scraper)
-# schedule.every(1).minutes.do(run_scraper)
+schedule.every(1).hour.do(run_scraper)
+# schedule.every().seconds.do(run_scraper)
 
 while True:
     schedule.run_pending()
